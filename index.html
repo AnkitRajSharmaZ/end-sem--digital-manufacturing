@@ -1,1 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Manufacturing - Detailed Exam Notes</title>
+    <!-- Handwritten Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Permanent+Marker&family=Architects+Daughter&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- Global Styles --- */
+        body {
+            background-color: #2d3748; /* Dark desk background */
+            font-family: 'Kalam', cursive;
+            margin: 0;
+            padding: 20px;
+            color: #2d3748;
+        }
 
+        /* --- Notebook Styling --- */
+        .notebook-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            position: relative;
+            background-color: #fdfbf7;
+            min-height: 297mm;
+            padding: 40px 20px 40px 60px; /* Left padding for holes */
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.4);
+            background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 100% 2rem; /* Lined paper */
+            border-radius: 5px;
+        }
+
+        /* Spiral Binding Holes */
+        .notebook-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 20px;
+            bottom: 0;
+            width: 15px;
+            background: radial-gradient(circle, #2d3748 30%, transparent 40%);
+            background-size: 100% 30px;
+        }
+
+        /* Vertical Margin Line */
+        .notebook-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50px;
+            width: 2px;
+            background-color: #feb2b2; /* Red margin line */
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.8rem;
+            color: #2b6cb0;
+            text-align: center;
+            transform: rotate(-1deg);
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 2rem;
+            color: #ffffff;
+            background-color: #4a5568;
+            padding: 5px 15px;
+            border-radius: 4px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #c05621; /* Burnt Orange */
+            margin-top: 25px;
+            border-bottom: 2px dashed #c05621;
+            display: inline-block;
+            background: rgba(255,255,255,0.8);
+            z-index: 10;
+            position: relative;
+        }
+
+        p, li, td, th {
+            font-size: 1.1rem;
+            line-height: 2rem; /* Matches grid lines */
+            background-color: rgba(253, 251, 247, 0.7); /* Slight background to make text readable */
+        }
+        
+        strong {
+            font-weight: 700;
+            color: #000;
+        }
+
+        /* --- Custom Boxes --- */
+        
+        /* 1. Process Box (Blue) */
+        .box-process {
+            border: 3px solid #4299e1;
+            background-color: #ebf8ff;
+            border-radius: 12px 2px 12px 2px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 4px 4px 0px rgba(66, 153, 225, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 2. Important/Highlight Box (Neon Yellow) */
+        .box-important {
+            background-color: #ffffcc;
+            border-left: 6px solid #ecc94b;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            transform: rotate(-0.5deg);
+        }
+
+        /* 3. Tech Specs Box (Purple) - NEW */
+        .box-specs {
+            background-color: #faf5ff;
+            border: 2px solid #9f7aea;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+            font-family: 'Architects Daughter', cursive;
+            font-size: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+        .box-specs table { width: 100%; border-collapse: collapse; }
+        .box-specs td { border-bottom: 1px dashed #d6bcfa; padding: 4px; line-height: 1.5rem;}
+        .box-specs th { text-align: left; color: #6b46c1; border-bottom: 2px solid #9f7aea; }
+
+        /* 4. Deep Dive Box (Orange) - NEW */
+        .box-deep {
+            background-color: #fffaf0;
+            border: 2px dotted #ed8936;
+            padding: 15px;
+            margin: 15px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 5. Diagram Alert Box (Red Dashed) */
+        .box-diagram {
+            border: 3px dashed #f56565;
+            background-color: #fff5f5;
+            color: #c53030;
+            padding: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 8px;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 6. Pros & Cons Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        @media (min-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .box-pros {
+            background-color: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .box-cons {
+            background-color: #fff5f5;
+            border: 2px solid #f56565;
+            border-radius: 8px;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- Highlighting --- */
+        .neon-text {
+            background: linear-gradient(120deg, rgba(250, 255, 0, 0) 0%, rgba(250, 255, 0, 0.8) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+            padding: 0 2px;
+            font-weight: 700;
+        }
+
+        /* --- Navigation Sticky Note --- */
+        .nav-note {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 220px;
+            background-color: #fefcbf; /* Yellow sticky note */
+            padding: 20px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+            transform: rotate(2deg);
+            z-index: 100;
+            font-family: 'Patrick Hand', cursive;
+            border-bottom-right-radius: 40px 5px;
+            display: none;
+        }
+        @media (min-width: 1200px) {
+            .nav-note { display: block; }
+        }
+        .nav-note ul {
+            list-style: none;
+            padding: 0;
+        }
+        .nav-note li {
+            margin-bottom: 8px;
+            border-bottom: 1px dotted #999;
+            line-height: 1.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .nav-note li:hover {
+            color: #c05621;
+            font-weight: bold;
+        }
+        .pin {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #e53e3e;
+            box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation Note -->
+    <div class="nav-note">
+        <div class="pin"></div>
+        <h3 style="margin-top:0; border:none; text-align:center;">Quick Index</h3>
+        <ul>
+            <li onclick="document.getElementById('lom').scrollIntoView({behavior: 'smooth'})">1. LOM (Paper)</li>
+            <li onclick="document.getElementById('fdm').scrollIntoView({behavior: 'smooth'})">2. FDM (Filament)</li>
+            <li onclick="document.getElementById('polyjet').scrollIntoView({behavior: 'smooth'})">3. PolyJet (Resin)</li>
+            <li onclick="document.getElementById('lens').scrollIntoView({behavior: 'smooth'})">4. LENS (Metal)</li>
+            <li onclick="document.getElementById('materials').scrollIntoView({behavior: 'smooth'})">5. Materials/Safety</li>
+        </ul>
+        <p style="font-size: 0.8rem; text-align: center; margin-top: 10px;">Exam Ready Mode! 🌟</p>
+    </div>
+
+    <div class="notebook-container">
+        
+        <!-- TITLE PAGE -->
+        <h1 id="top">Digital Manufacturing<br><span style="font-size: 1.5rem; color: #4a5568;">Comprehensive Exam Notes</span></h1>
+
+        <!-- 1. LOM SECTION -->
+        <div id="lom">
+            <h2>1. Laminated Object Manufacturing (LOM)</h2>
+            <p><strong>Manufacturer:</strong> <span class="neon-text">Cubic Technologies</span> (Successor to Helisys Inc.).<br>
+            <strong>Address:</strong> Torrance, CA.</p>
+
+            <div class="box-specs">
+                <h4 style="margin:0; color:#6b46c1;">🔧 Machine Specifications (IMPORTANT)</h4>
+                <table>
+                    <tr><th>Model</th><th>LOM-1015Plus™</th><th>LOM-2030H™</th></tr>
+                    <tr><td><strong>Laser Power</strong></td><td>25 W (CO<sub>2</sub>)</td><td>50 W (CO<sub>2</sub>)</td></tr>
+                    <tr><td><strong>Build Size</strong></td><td>380 x 250 x 350 mm</td><td>810 x 550 x 500 mm</td></tr>
+                    <tr><td><strong>Accuracy</strong></td><td>±0.127 mm (0.005")</td><td>±0.127 mm</td></tr>
+                    <tr><td><strong>Laser Beam</strong></td><td>0.25 mm (0.010") dia</td><td>0.25 mm dia</td></tr>
+                    <tr><td><strong>Material Thickness</strong></td><td>0.08 - 0.25 mm</td><td>0.08 - 0.25 mm</td></tr>
+                </table>
+            </div>
+
+            <div class="box-process">
+                <h3 style="margin-top:0; background:none;">⚙️ Detailed Process (3 Phases)</h3>
+                
+                <p><strong>1. Pre-Processing:</strong></p>
+                <ul class="list-disc pl-5">
+                    <li>Software: <strong>LOMSlice™</strong>.</li>
+                    <li>Generates image from CAD (STL).</li>
+                    <li>Functions: Slicing, Orienting, Merging.</li>
+                </ul>
+
+                <p><strong>2. Building (The Cycle):</strong></p>
+                <ul class="list-disc pl-5">
+                    <li><strong>Bonding:</strong> Platform rises. A heated roller (reciprocal motion) bonds new material to the stack. <span class="neon-text">Temperature control is critical</span> for uniform lamination.</li>
+                    <li><strong>Cutting:</strong> CO<sub>2</sub> Laser cuts the <span class="neon-text">perimeter</span> (part outline) and <span class="neon-text">cross-hatches</span> the waste. Laser power is tuned to cut ONLY one layer depth.</li>
+                    <li><strong>Z-Axis Control:</strong> Real-time closed-loop feedback measures cumulative stack height to adjust slicing data dynamically.</li>
+                </ul>
+
+                <p><strong>3. Post-Processing:</strong></p>
+                <ul class="list-disc pl-5">
+                    <li><strong>Decubing:</strong> Removing the block and separating the part from the cross-hatched support cubes using wood carving tools.</li>
+                </ul>
+            </div>
+
+            <div class="box-diagram">
+                [Image of LOM process diagram]
+                👀 PDF REF: "LOM and FDM.pdf" <br>
+                Page 2, Fig 4.7 & 4.8 (Machine & Build Process)
+            </div>
+
+            <div class="box-deep">
+                <strong>📝 Materials Used in LOM:</strong>
+                <ul class="list-disc pl-5">
+                    <li><strong>LOMPaper:</strong> Kraft paper with polyethylene adhesive (Most popular, cheap, wood-like).</li>
+                    <li><strong>LOMPlastic:</strong> For plastic-like parts.</li>
+                    <li><strong>Composites/Ceramics:</strong> Possible but less common.</li>
+                    <li><strong>LOMPlastic:</strong> LPH series, LPS series.</li>
+                </ul>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="box-pros">
+                    <h3 style="margin-top:0; background:none; color: #2f855a;">✅ Strengths</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Fast for Bulky Parts:</strong> Laser only traces outline, doesn't scan area.</li>
+                        <li><strong>No Supports Needed:</strong> Cross-hatched waste supports overhangs.</li>
+                        <li><strong>Zero Internal Stress:</strong> No phase change (liquid->solid), so no warpage.</li>
+                        <li><strong>Eco-friendly:</strong> Paper is environmentally benign.</li>
+                    </ul>
+                </div>
+                <div class="box-cons">
+                    <h3 style="margin-top:0; background:none; color: #c53030;">❌ Weaknesses</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Fire Hazard:</strong> Requires supervision.</li>
+                        <li><strong>Hollow Parts:</strong> Difficult to remove internal waste ("decubing").</li>
+                        <li><strong>Z-Accuracy:</strong> Limited by sheet thickness.</li>
+                        <li><strong>Moisture Sensitivity:</strong> Paper parts absorb moisture (need sealing).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border-top: 2px dashed #cbd5e0; margin: 40px 0;">
+
+        <!-- 2. FDM SECTION -->
+        <div id="fdm">
+            <h2>2. Fused Deposition Modeling (FDM)</h2>
+            <p><strong>Company:</strong> <span class="neon-text">Stratasys</span> (Dimension Series).<br>
+            <strong>Software:</strong> <em>Insight</em> (High-end) or <em>Catalyst®</em> (Dimension series).</p>
+
+            <div class="box-specs">
+                <h4 style="margin:0; color:#6b46c1;">🔧 Machine Models</h4>
+                <table>
+                    <tr><th>Model</th><th>Build Size</th><th>Layer Thickness</th></tr>
+                    <tr><td><strong>Dimension 1200</strong></td><td>254 x 254 x 305 mm</td><td>0.245 or 0.33 mm</td></tr>
+                    <tr><td><strong>Dimension 768</strong></td><td>203 x 203 x 305 mm</td><td>0.245 mm</td></tr>
+                    <tr><td><strong>Dimension Elite</strong></td><td>203 x 203 x 305 mm</td><td><span class="neon-text">0.178 mm</span> (Fine!)</td></tr>
+                </table>
+            </div>
+
+            <div class="box-process">
+                <h3 style="margin-top:0; background:none;">⚙️ Detailed Process</h3>
+                <p><strong>1. The Head (Liquifier):</strong></p>
+                <ul class="list-disc pl-5">
+                    <li>Uses a <strong>Dual Tip Mechanism</strong>: One nozzle for Model material, one for Support material.</li>
+                    <li>Heats filament to <span class="neon-text">semi-liquid</span> state (0.5°C above melting point).</li>
+                    <li>Floating elements inside liquifier ensure smooth flow.</li>
+                </ul>
+                <p><strong>2. Deposition:</strong></p>
+                <ul class="list-disc pl-5">
+                    <li>Material bonds thermally to the previous layer.</li>
+                    <li>Surrounding air is kept just below melting point to allow instant solidification.</li>
+                </ul>
+            </div>
+
+            <div class="box-diagram">
+                [Image of FDM head diagram]
+                👀 PDF REF: "LOM and FDM.pdf" <br>
+                Page 7, Fig 4.3 (Filament Feed & Liquifier)
+            </div>
+
+            <div class="box-deep">
+                <strong>🛠 Support Systems (Crucial):</strong>
+                <ol class="list-decimal pl-5">
+                    <li><strong>BASS (Break Away Support System):</strong> Mechanical removal. Manual snapping.</li>
+                    <li><strong>WaterWorks (SST - Soluble Support Tech):</strong> Dissolves in water-based solution. Used in Dimension Elite/SST. allows for complex geometries and internal cavities.</li>
+                </ol>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="box-pros">
+                    <h3 style="margin-top:0; background:none; color: #2f855a;">✅ Strengths</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Functional Parts:</strong> ABS/PC are real engineering plastics.</li>
+                        <li><strong>ABSplus:</strong> 40% stronger than standard ABS.</li>
+                        <li><strong>Office Friendly:</strong> Clean, quiet, no toxic fumes.</li>
+                        <li><strong>Minimal Waste:</strong> Additive only.</li>
+                    </ul>
+                </div>
+                <div class="box-cons">
+                    <h3 style="margin-top:0; background:none; color: #c53030;">❌ Weaknesses</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Seam Lines:</strong> "Stair-stepping" effect.</li>
+                        <li><strong>Anisotropy:</strong> Weak in Z-axis (layers can delaminate).</li>
+                        <li><strong>Speed:</strong> Slow for dense parts (point-to-point drawing).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border-top: 2px dashed #cbd5e0; margin: 40px 0;">
+
+        <!-- 3. POLYJET SECTION -->
+        <div id="polyjet">
+            <h2>3. PolyJet Printing</h2>
+            <p><strong>Core Tech:</strong> Inkjet heads jetting <span class="neon-text">Liquid Photopolymers</span> + UV Curing.</p>
+
+            <div class="box-specs">
+                <h4 style="margin:0; color:#6b46c1;">🔧 Tech Specs</h4>
+                <ul class="list-disc pl-5">
+                    <li><strong>Layer Resolution:</strong> <span class="neon-text">16 microns</span> (0.0006"). Ultra-fine!</li>
+                    <li><strong>Accuracy:</strong> 0.1 - 0.3 mm.</li>
+                    <li><strong>Min Wall Thickness:</strong> 1 mm.</li>
+                    <li><strong>Hardness Range:</strong> Shore 27A (Rubber) to 95A (Rigid).</li>
+                </ul>
+            </div>
+
+            <div class="box-process">
+                <h3 style="margin-top:0; background:none;">⚙️ Process Steps</h3>
+                <ol class="list-decimal pl-5">
+                    <li><strong>Pre-Processing:</strong> Software calculates model and support placement.</li>
+                    <li><strong>Production:</strong>
+                        <ul class="list-disc pl-5">
+                            <li>Carriage moves X-Y. Jets droplets.</li>
+                            <li><strong>UV Lamps</strong> on carriage cure droplets <em>immediately</em>.</li>
+                            <li>Build tray lowers (Z-axis).</li>
+                            <li>Multi-jet heads allow <span class="neon-text">Simultaneous Jetting</span> of model AND support.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Support Removal:</strong> Gel-like support removed by water jet or hand.</li>
+                </ol>
+            </div>
+
+            <div class="box-diagram">
+                
+                👀 PDF REF: "Polyjet printing.pdf" <br>
+                Page 6 (Hand Drawn Sketch of Head & Lamps)
+            </div>
+
+            <div class="box-important">
+                🌟 "Digital Materials":
+                <p>PolyJet can mix resins on the fly. It can create gradients (rigid to flexible) and mix colors. It simulates overmolds (e.g., a toothbrush handle with rubber grip) in ONE PRINT.</p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="box-pros">
+                    <h3 style="margin-top:0; background:none; color: #2f855a;">✅ Strengths</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Aesthetics:</strong> Smooth, glossy finish.</li>
+                        <li><strong>Multi-Material:</strong> 1000s of material options via mixing.</li>
+                        <li><strong>Speed:</strong> Fast batch production (line-wise printing).</li>
+                    </ul>
+                </div>
+                <div class="box-cons">
+                    <h3 style="margin-top:0; background:none; color: #c53030;">❌ Weaknesses</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Cost:</strong> Resins are very expensive.</li>
+                        <li><strong>Durability:</strong> Photopolymers degrade in UV light/Heat over time.</li>
+                        <li><strong>Support Marks:</strong> Matte finish where support touches, Glossy where it doesn't.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border-top: 2px dashed #cbd5e0; margin: 40px 0;">
+
+        <!-- 4. LENS SECTION -->
+        <div id="lens">
+            <h2>4. LENS (Laser Engineered Net Shaping)</h2>
+            <p><strong>Company:</strong> <span class="neon-text">Optomec</span> (Albuquerque, NM).<br>
+            <strong>Tech Family:</strong> Directed Energy Deposition (DED).</p>
+
+            <div class="box-specs">
+                <h4 style="margin:0; color:#6b46c1;">🔧 Machine: Model 850-R</h4>
+                <ul class="list-disc pl-5">
+                    <li><strong>Laser:</strong> Nd:YAG or Fiber Laser (500 W to 2 kW).</li>
+                    <li><strong>Build Volume:</strong> 900 x 1500 x 900 mm (Huge!).</li>
+                    <li><strong>Components:</strong> Argon Recirculation Unit, Glove Box, Hermetic Chamber (Oxygen-free).</li>
+                </ul>
+            </div>
+
+            <div class="box-process">
+                <h3 style="margin-top:0; background:none;">⚙️ Process Physics</h3>
+                <ol class="list-decimal pl-5">
+                    <li><strong>Molten Puddle:</strong> Laser focuses on metal substrate, creating a melt pool.</li>
+                    <li><strong>Powder Injection:</strong> Nozzles inject metal powder <em>into</em> the focal point/puddle.</li>
+                    <li><strong>Fusion:</strong> Powder melts and bonds. Head moves to draw lines.</li>
+                    <li><strong>Cooling:</strong> Rapid solidification results in fine grain structure (Better properties!).</li>
+                </ol>
+            </div>
+
+            <div class="box-diagram">
+                [Image of LENS process]
+                👀 PDF REF: "DOC-2025...WA0009.pdf" <br>
+                Page 3, Fig 5.15 (Converging Streams Nozzle)
+            </div>
+
+            <div class="box-deep">
+                <strong>🚀 Specific Applications:</strong>
+                <ul class="list-disc pl-5">
+                    <li><strong>Repair:</strong> Adding metal to worn turbine blades.</li>
+                    <li><strong>Aerospace:</strong> Titanium parts.</li>
+                    <li><strong>Medical:</strong> Biological implants (Ti-6Al-4V).</li>
+                    <li><strong>Hybrid:</strong> Can be integrated with CNC mills.</li>
+                </ul>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="box-pros">
+                    <h3 style="margin-top:0; background:none; color: #2f855a;">✅ Strengths</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Fully Dense:</strong> 100% density metal parts.</li>
+                        <li><strong>Microstructure:</strong> Excellent grain structure.</li>
+                        <li><strong>Repair:</strong> Unique ability to fix existing parts.</li>
+                    </ul>
+                </div>
+                <div class="box-cons">
+                    <h3 style="margin-top:0; background:none; color: #c53030;">❌ Weaknesses</h3>
+                    <ul class="list-disc pl-4">
+                        <li><strong>Surface Finish:</strong> Rough (like a weld bead). Needs CNC finishing.</li>
+                        <li><strong>Size/Cost:</strong> Requires a huge room and high power.</li>
+                        <li><strong>Complexity:</strong> Cannot do hollow parts easily (no support).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <hr style="border-top: 2px dashed #cbd5e0; margin: 40px 0;">
+
+        <!-- 5. GENERAL & SAFETY SECTION -->
+        <div id="materials">
+            <h2>5. General Digital Manufacturing Topics</h2>
+
+            <h3>A. Engineering Polymers (Plastics)</h3>
+            <p>Synthetic materials with high performance.</p>
+            <div class="box-deep">
+                <ul class="list-disc pl-5">
+                    <li><strong>Polyamides (Nylon/PA):</strong> High strength, used in gears, ski boots.</li>
+                    <li><strong>Polycarbonates (PC):</strong> High impact resistance. Used in helmets, optical discs.</li>
+                    <li><strong>ABS (Acrylonitrile Butadiene Styrene):</strong> Most common. Car bumpers, LEGO bricks.</li>
+                    <li><strong>PMMA (Acrylic):</strong> Transparent. Used in taillights.</li>
+                </ul>
+            </div>
+
+            <h3>B. Topology Optimization</h3>
+            <div class="box-important">
+                Definition: A math method that optimizes material layout within a given space for a given set of loads.
+                <br><em>Difference from Shape Optimization:</em> Topology optimization can create <span class="neon-text">holes</span> and new shapes, not just resize existing ones.
+                <br><strong>Result:</strong> Organic, bone-like structures perfect for AM.
+            </div>
+
+            <h3>C. Advanced Topics</h3>
+            <ul class="list-disc pl-5">
+                <li><strong>Bioprinting:</strong> Uses "Bioinks" (Cells + Hydrogels like Alginate/Collagen).
+                    <br><em>Techniques:</em> Extrusion-based or Droplet-based.
+                    <br><em>Uses:</em> Drug testing (reduce animal testing), Tissue Engineering.</li>
+                <li><strong>Food Printing:</strong> 
+                    <br><em>Materials:</em> Chocolate, dough, cheese, purees.
+                    <br><em>Benefits:</em> Customized nutrition for elderly/athletes.</li>
+                <li><strong>Digital Assembly:</strong>
+                    <br><em>Digital Instructions:</em> Screens instead of paper (fewer errors).
+                    <br><em>Digital Planning:</em> Simulating the line before building it.</li>
+            </ul>
+
+            <h3>D. Industrial Safety ⚠️</h3>
+            <div class="box-important" style="border-left-color: #f56565; background-color: #fff5f5;">
+                <strong>The 7 Golden Rules:</strong>
+                <ol class="list-decimal pl-5">
+                    <li>Keep work area clean.</li>
+                    <li>Use the proper tool for the job.</li>
+                    <li><strong>Always wear PPE</strong> (Goggles, Gloves, etc.).</li>
+                    <li>Never work on live equipment.</li>
+                    <li>Label and store chemicals properly.</li>
+                    <li>Communicate hazards to others.</li>
+                    <li>Stop work when needed to address hazards.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 50px; font-family: 'Permanent Marker', cursive; font-size: 1.5rem; color: #2d3748;">
+            You are ready! Go crush that exam! 🚀
+        </div>
+
+    </div>
+
+</body>
+</html>
